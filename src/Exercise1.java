@@ -9,8 +9,8 @@ public class Exercise1 {
     public static void main(String[] args){
 
 
-        for(int h=5;h<60;h=h+2) {
-            //int h=6;
+        //for(int h=5;h<60;h=h+2) {
+            int h=55;
             double[] x = new double[h];
             double[] z = new double[h];
 
@@ -19,7 +19,7 @@ public class Exercise1 {
             double h1 = (b1 - a1) / (h - 1);
 
             for (int i = 0; i < h; i++) {
-                x[i] = a1 + h1 * i;
+                x[i] = a1 + h1*i;
             }
             for (int i = 0; i < h; i++) {
                 z[i] = ci(x[i]);
@@ -80,28 +80,31 @@ public class Exercise1 {
             double[] f4 = new double[k];
             double[] f5 = new double[k];
 
-            for (int i = 0; i < k; i++) {
+
+            for (int i = 0; i<k  ; i++) {
                 x2[i] = ((b1 - a1) / 2) * Math.cos(Math.PI * (2 * i + 1) / (2 * (k - 1) + 2)) + (b1 + a1) / 2;
             }
+
+
             for (int i = 0; i < k; i++) {
                 f3[i] = lagrange(x2[i], x, z);
                 f4[i] = ci(x2[i]);
                 f5[i] = Math.abs(f4[i] - f3[i]);
-                //System.out.printf("%.2f %.6f %.6f %.6f" + "\n", x2[i], f3[i], f4[i], f5[i]);
+                System.out.printf("%.2f %.6f %.6f %.6f" + "\n", x2[i], f3[i], f4[i], f5[i]);
                 if (Math.abs(f5[i]) >= e2) {
                     e2 = f5[i];
                 }
             }
-            System.out.printf("%d %.6f" + "\n", h, Math.abs(e1));
-            //System.out.printf("%d %.6f" + "\n", h, Math.abs(e2));
-            //System.out.println();
+            //System.out.printf("%d" + "\n", h);
+            //System.out.printf("%.6f" + "\n", Math.abs(e1));
+
 
         }
 //        for(int i=0; i<k; i++) {
 //            System.out.printf("%.2f" + "\n", x2[i]);
 //        }
 
-    }
+    //}
 
     public static double lagrange(double arg, double[] x, double[] y){
         double result=0;
