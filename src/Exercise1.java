@@ -9,25 +9,22 @@ public class Exercise1 {
     public static void main(String[] args){
 
 
-        int h=50;
-        double[] x= new double [h];
-        double[] z= new double [h];
+        for(int h=5;h<60;h=h+2) {
+            //int h=6;
+            double[] x = new double[h];
+            double[] z = new double[h];
 
-        double a1=0.4;
-        double b1=4.0;
-        double h1=(b1-a1)/(h-1);
+            double a1 = 0.4;
+            double b1 = 4.0;
+            double h1 = (b1 - a1) / (h - 1);
 
-        x[0] = a1;
-        //x[0]=a1;
-
-        for(int i=1; i<h; i++){
-            x[i] = x[i-1]+h1;
-            //x[i]=x[i-1]+h1;
-        }
-        for(int i=0; i<h; i++){
-            z[i] = ci(x[i]);
-            System.out.printf("%.2f %.6f" + "\n", x[i], z[i]);
-        }
+            for (int i = 0; i < h; i++) {
+                x[i] = a1 + h1 * i;
+            }
+            for (int i = 0; i < h; i++) {
+                z[i] = ci(x[i]);
+                //System.out.printf("%.2f %.6f" + "\n", x[i], z[i]);
+            }
 
 //        x[0]=0.8;
 //        x[1]=2;
@@ -52,54 +49,55 @@ public class Exercise1 {
 //            a=0;
 //            System.out.println(x[i]+"\t"+z[i]);
 //        }
-        int k=11;
-        double e1=0;
-        System.out.println();
-        double[] x1= new double [k];
-        double[] f= new double [k];
-        double[] f1= new double [k];
-        double[] f2= new double [k];
+            //System.out.println();
 
+            int k = 11;
+            double e1 = 0;
+            double[] x1 = new double[k];
+            double[] f = new double[k];
+            double[] f1 = new double[k];
+            double[] f2 = new double[k];
 
+            double h2 = (b1 - a1) / (k - 1);
 
-
-        x1[0] =  a1;
-        double h2 = (b1-a1)/(k-1);
-
-        for(int i=1; i<k; i++){
-            x1[i] = x1[i-1]+h2;
-        }
-        for(int i=0; i<k; i++){
-            f[i] = lagrange(x1[i],x,z);
-            f1[i] = ci(x1[i]);
-            f2[i] = Math.abs(f[i]-f1[i]);
-            System.out.printf("%.2f %.6f %.6f %.6f" + "\n", x1[i],f[i],f1[i],f2[i]);
-                    if(Math.abs(f2[i]) >= e1){
-                        e1=f2[i];
-                    }
+            for (int i = 0; i < k; i++) {
+                x1[i] = a1 + h2 * i;
             }
-        System.out.println();
-        double e2=0;
-        double[] x2= new double [k];
-        double[] f3= new double [k];
-        double[] f4= new double [k];
-        double[] f5= new double [k];
-
-        for(int i=0; i<k; i++) {
-            x2[i] = ((b1 - a1) / 2.0) * Math.cos(((2 * i + 1) * Math.PI)/(2*k+1)) + (b1 + a1) / 2;
-        }
-        for(int i=0; i<k; i++){
-            f3[i] = lagrange(x2[i],x,z);
-            f4[i] = ci(x2[i]);
-            f5[i] = Math.abs(f3[i]-f4[i]);
-            System.out.printf("%.2f %.6f %.6f %.6f" + "\n", x2[i],f3[i],f4[i],f5[i]);
-            if(Math.abs(f5[i]) >= e2){
-                e2=f2[i];
+            for (int i = 0; i < k; i++) {
+                f[i] = lagrange(x1[i], x, z);
+                f1[i] = ci(x1[i]);
+                f2[i] = Math.abs(f[i] - f1[i]);
+                //System.out.printf("%.2f %.6f %.6f %.6f" + "\n", x1[i], f[i], f1[i], f2[i]);
+                if (Math.abs(f2[i]) >= e1) {
+                    e1 = f2[i];
+                }
             }
+
+            //System.out.println();
+            double e2 = 0;
+            double[] x2 = new double[k];
+            double[] f3 = new double[k];
+            double[] f4 = new double[k];
+            double[] f5 = new double[k];
+
+            for (int i = 0; i < k; i++) {
+                x2[i] = ((b1 - a1) / 2) * Math.cos(Math.PI * (2 * i + 1) / (2 * (k - 1) + 2)) + (b1 + a1) / 2;
+            }
+            for (int i = 0; i < k; i++) {
+                f3[i] = lagrange(x2[i], x, z);
+                f4[i] = ci(x2[i]);
+                f5[i] = Math.abs(f4[i] - f3[i]);
+                //System.out.printf("%.2f %.6f %.6f %.6f" + "\n", x2[i], f3[i], f4[i], f5[i]);
+                if (Math.abs(f5[i]) >= e2) {
+                    e2 = f5[i];
+                }
+            }
+            System.out.printf("%d %.6f" + "\n", h, Math.abs(e1));
+            //System.out.printf("%d %.6f" + "\n", h, Math.abs(e2));
+            //System.out.println();
+
         }
-        System.out.printf("%.6f" + "\n", Math.abs(e1));
-        System.out.printf("%.6f" + "\n", Math.abs(e2));
-//        for(int i=0; i<k; i++){
+//        for(int i=0; i<k; i++) {
 //            System.out.printf("%.2f" + "\n", x2[i]);
 //        }
 
@@ -111,10 +109,10 @@ public class Exercise1 {
             double k=1;
             for(int j=0; j<y.length; j++){
                 if(j!=i){
-                    k = k*((arg-x[j])/(x[i]-x[j]));
+                    k*=((arg-x[j])/(x[i]-x[j]));
                 }
             }
-            result = result+(k*y[i]);
+            result+=(k*y[i]);
         }
         return result;
     }
