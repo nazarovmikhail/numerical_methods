@@ -94,9 +94,12 @@ public class Exercise1 {
                 e2 = f5[i];
             }
         }
-        for (int i = 5; i < 60; i=i+3) {
+        for (int i = 5; i < 60; i=i+2) {
             PogreshnostCheb(0.4, 4, 10, i);
         }
+
+
+
         //System.out.printf("%d" + "\n", h);
         //System.out.printf("%.6f" + "\n", Math.abs(e1));
 
