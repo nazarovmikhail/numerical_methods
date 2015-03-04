@@ -10,7 +10,7 @@ public class Exercise1 {
 
 
         //for(int h=5;h<60;h=h+2) {
-        int h = 55;
+        int h = 6;
         double[] x = new double[h];
         double[] z = new double[h];
 
@@ -60,6 +60,7 @@ public class Exercise1 {
         double h2 = (b1 - a1) / (k - 1);
 
         for (int i = 0; i < k; i++) {
+
             x1[i] = a1 + h2 * i;
         }
         for (int i = 0; i < k; i++) {
@@ -67,6 +68,7 @@ public class Exercise1 {
             f1[i] = ci(x1[i]);
             f2[i] = Math.abs(f[i] - f1[i]);
             //System.out.printf("%.2f %.6f %.6f %.6f" + "\n", x1[i], f[i], f1[i], f2[i]);
+            //System.out.printf("%.6f" + "\n", f2[i]);
             if (Math.abs(f2[i]) >= e1) {
                 e1 = f2[i];
             }
@@ -86,28 +88,22 @@ public class Exercise1 {
 
 
         for (int i = 0; i < k; i++) {
-            f3[i] = lagrange(x2[i], x, h);
-            f4[i] = ci(x2[i]);
+            f3[i] = lagrange(x[i], x2, h);
+            f4[i] = ci(x[i]);
             f5[i] = Math.abs(f4[i] - f3[i]);
             //System.out.printf("%.2f %.6f %.6f %.6f" + "\n", x2[i], f3[i], f4[i], f5[i]);
+            //System.out.printf("%.6f" + "\n", f5[i]);
             if (Math.abs(f5[i]) >= e2) {
                 e2 = f5[i];
             }
         }
-        for (int i = 5; i < 60; i=i+2) {
-            PogreshnostCheb(0.4, 4, 10, i);
-        }
-
-
-
-        //System.out.printf("%d" + "\n", h);
-        //System.out.printf("%.6f" + "\n", Math.abs(e1));
-
+//        for (int i = 5; i < 60; i=i+2) {
+//            PogreshnostCheb(0.4, 4, k-1, i);
+//        }
+        MakeChebish(a1,b1,10,5);
 
     }
-//        for(int i=0; i<k; i++) {
-//            System.out.printf("%.2f" + "\n", x2[i]);
-//        }
+
 
 
     public static double lagrange(double arg, double[] x, int n) {
@@ -157,9 +153,30 @@ public class Exercise1 {
         for (int i = 0; i <= n; i++) {
             double j = lagrange(mass1[i], mass, m) - ci(mass1[i]);
             if (Math.abs(maxp) < Math.abs(j))
-                maxp = j;
+                maxp = Math.abs(j);
         }
-        System.out.printf("%d %.6f" + "\n", m, maxp);
+        //System.out.printf("%d %.6f" + "\n", m, maxp);
+    }
+
+    public static void MakeChebish( double a, double b, int n, int m){
+        double[] mass = new double[m+1];
+        double[] mass1 = new double[n+1];
+
+        mass[0]=Math.min(a,b);
+        mass1[0]=Math.min(a,b);
+
+        double h = (Math.max(a,b)-Math.min(a,b))/n;
+
+        for( int i=0; i<=m; i++){
+            mass[i]=(((Math.max(a,b))-Math.min(a,b))/2)*Math.cos(Math.PI*(2*i+1)/(2*m+2))+((b+a)/2);
+        }
+        for (int i=1;i<=n; i++){
+            mass1[i]=Math.min(a,b)+i*h;
+        }
+        for (int i=0; i<=n;i++){
+            System.out.printf("%.2f %.6f %.6f %.6f" + "\n", mass1[i], lagrange(mass1[i],mass,m),ci(mass1[i]),Math.abs(lagrange(mass1[i],mass,m)-ci(mass1[i])));
+            //System.out.printf("%.6f" + "\n",Math.abs(lagrange(mass1[i],mass,m)-ci(mass1[i])));
+        }
     }
 
 }
